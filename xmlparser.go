@@ -104,10 +104,11 @@ type ConfigStruct struct {
 			Enabled    bool `xml:"enabled,attr"`
 			GPIOOffset uint `xml:"gpiooffset"`
 			Heartbeat  struct {
-				Enabled     bool          `xml:"enabled,attr"`
-				Periodmsecs time.Duration `xml:"periodmsecs"`
-				Ledonmsecs  time.Duration `xml:"ledonmsecs"`
-				Ledoffmsecs time.Duration `xml:"ledoffmsecs"`
+				Enabled         bool          `xml:"enabled,attr"`
+				HeartBeatLEDPin uint          `xml:"heartbeatledpin"`
+				Periodmsecs     time.Duration `xml:"periodmsecs"`
+				Ledonmsecs      time.Duration `xml:"ledonmsecs"`
+				Ledoffmsecs     time.Duration `xml:"ledoffmsecs"`
 			} `xml:"heartbeat"`
 			Mapping struct {
 				Map []struct {

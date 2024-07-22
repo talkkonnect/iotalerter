@@ -6,7 +6,6 @@ import (
 	"net"
 	"os"
 	"reflect"
-	"regexp"
 	"time"
 
 	term "github.com/talkkonnect/termbox-go"
@@ -57,15 +56,6 @@ func FatalCleanUp(message string) {
 	time.Sleep(5 * time.Second)
 	term.Close()
 	os.Exit(1)
-}
-
-func checkRegex(regex string, compareto string) bool {
-	match, err := regexp.MatchString(regex, compareto)
-	if err != nil {
-		log.Println("error: Cannot Match Regular Expression Error", err)
-		return false
-	}
-	return match
 }
 
 func Call(m map[string]interface{}, name string, params ...interface{}) (result []reflect.Value, err error) {

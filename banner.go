@@ -6,7 +6,7 @@ import (
 
 func iotRelayBoardBanner(backgroundcolor string) {
 	var backgroundreset string = "\u001b[0m"
-	log.Println("info: " + backgroundcolor + "┌───────────────────────────────────────────────────────────────────────────────────┐" + backgroundreset)
+	log.Println("info: " + backgroundcolor + " ┌───────────────────────────────────────────────────────────────────────────────────┐" + backgroundreset)
 	log.Println("info: " + backgroundcolor + "│██╗ ██████╗ ████████╗     █████╗ ██╗     ███████╗██████╗ ████████╗███████╗██████╗  │" + backgroundreset)
 	log.Println("info: " + backgroundcolor + "│██║██╔═══██╗╚══██╔══╝    ██╔══██╗██║     ██╔════╝██╔══██╗╚══██╔══╝██╔════╝██╔══██╗ │" + backgroundreset)
 	log.Println("info: " + backgroundcolor + "│██║██║   ██║   ██║       ███████║██║     █████╗  ██████╔╝   ██║   █████╗  ██████╔╝ │" + backgroundreset)

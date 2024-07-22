@@ -138,6 +138,32 @@ func GPIOOutPinByItem(item string, command string) {
 	}
 }
 
+func GPIOOutPinByGPIO(pin uint, command string) {
+	if !Config.Global.Gpio.Enabled {
+		return
+	}
+
+	var io structIO
+	io.Name = "heartbeat"
+
+	if command == "off" {
+		if io.Blocking {
+			pinOn(int(pin), io)
+		} else {
+			go pinOn(int(pin), io)
+		}
+	}
+
+	if command == "on" {
+		if io.Blocking {
+			pinOff(int(pin), io)
+		} else {
+			go pinOff(int(pin), io)
+		}
+	}
+
+}
+
 func GPIOOutAll(name string, command string) {
 	if !Config.Global.Gpio.Enabled {
 		return
@@ -168,7 +194,7 @@ func GPIOOutAll(name string, command string) {
 }
 
 func heartBeat() {
-	if !Config.Global.Gpio.Heartbeat.Enabled {
+	if Config.Global.Gpio.Heartbeat.Enabled {
 		HeartBeat := time.NewTicker(time.Duration(Config.Global.Gpio.Heartbeat.Periodmsecs) * time.Millisecond)
 
 		for range HeartBeat.C {

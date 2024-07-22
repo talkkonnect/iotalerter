@@ -5,6 +5,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"strconv"
 	"time"
 
 	"github.com/talkkonnect/colog"
@@ -109,8 +110,6 @@ func Init(configFile string) {
 
 	go heartBeat()
 
-	iotRelayBoardBanner("\x1b[0;44m")
-
 	if Config.Global.Communication.Mqtt.Enabled {
 		mqttsubscribe()
 	}
@@ -123,6 +122,15 @@ func Init(configFile string) {
 			}
 		}()
 	}
+
+	var eventSound EventSoundStruct = findEventSound("startup")
+	if eventSound.Enabled {
+		if v, err := strconv.Atoi(eventSound.Volume); err == nil {
+			localMediaPlayer(eventSound.FileName, v, eventSound.Blocking, 0, 1)
+		}
+	}
+
+	iotRelayBoardBanner("\x1b[0;44m")
 
 keyPressListenerLoop:
 	for {
@@ -137,7 +145,7 @@ keyPressListenerLoop:
 			case term.KeyDelete:
 				log.Println("info: --")
 				log.Println("info: Del Key Pressed Menu Requested")
-				iotRelayBoardBannerAddColor()
+				iotalerterMenu()
 				log.Println("info: --")
 			case term.KeyF1:
 				log.Println("info: --")
