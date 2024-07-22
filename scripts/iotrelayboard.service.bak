@@ -1,0 +1,24 @@
+[Unit]
+Description=iotrelayboard screen
+Requires=systemd-user-sessions.service network.target sound.target dbus.socket
+After=multi-user.target
+AllowIsolate=true
+
+[Service]
+RemainAfterExit=no
+User=
+Group=
+Type=forking
+WorkingDirectory=
+ExecStartPre=
+ExecStart=/usr/bin/screen -dmS tk /home/talkkonnect/bin/iotrelayboard
+ExecReload=/bin/kill -s HUP $MAINPID
+ExecStop=/bin/kill -s SIGTERM $MAINPID
+PrivateTmp=true
+
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target
+Alias=iotrelayboard.service

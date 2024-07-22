@@ -1,0 +1,10 @@
+export GOPATH=/home/talkkonnect/gocode
+export GOBIN=/home/talkkonnect/bin
+export GO111MODULE="auto"
+
+rm /home/talkkonnect/bin/iotalerter
+
+cd $GOPATH
+cd $GOPATH/src/github.com/talkkonnect/iotalerter
+/usr/local/go/bin/go build -o /home/talkkonnect/bin/iotalerter /home/talkkonnect/gocode/src/github.com/talkkonnect/iotalerter/cmd/main.go
+
