@@ -23,6 +23,19 @@ type structIO struct {
 	Enabled            bool "xml:\"enabled,attr\""
 }
 
+// Variables for Input Buttons/Switches
+var (
+	Opto1Used  bool
+	Opto1      gpio.Pin
+	Opto1Pin   uint
+	Opto1State uint
+
+	Opto2Used  bool
+	Opto2      gpio.Pin
+	Opto2Pin   uint
+	Opto2State uint
+)
+
 func initGPIO() {
 
 	if !Config.Global.Gpio.Enabled {
@@ -37,9 +50,29 @@ func initGPIO() {
 
 	//initially turn all relays off on initalization
 	for no, io := range Config.Global.Gpio.Mapping.Map {
-		if io.Enabled && io.Direction == "output" {
+		if io.Enabled && io.Direction == "output" && io.Devicetype == "relay" {
 			gpio.NewOutput(io.Gpio, true)
 			Config.Global.Gpio.Mapping.Map[no].CurrentState = true
+		}
+	}
+
+	// handle inputs on RPI GPIO
+	for _, io := range Config.Global.Gpio.Mapping.Map {
+		if io.Enabled && io.Direction == "input" && io.Devicetype == "opto" {
+			if io.Name == "opto1" && io.Gpio > 0 {
+				log.Printf("debug: GPIO Gpio Input Name %v PinNo %v", io.Name, io.Gpio)
+				Opto1PinPullUp := rpio.Pin(io.Gpio)
+				Opto1PinPullUp.PullUp()
+				Opto1Used = true
+				Opto1Pin = io.Gpio
+			}
+		}
+		if io.Name == "opto2" && io.Gpio > 0 {
+			log.Printf("debug: GPIO Gpio Input Name %v PinNo %v", io.Name, io.Gpio)
+			Opto2PinPullUp := rpio.Pin(io.Gpio)
+			Opto2PinPullUp.PullUp()
+			Opto2Used = true
+			Opto2Pin = io.Gpio
 		}
 	}
 }
@@ -52,7 +85,7 @@ func GPIOOutPinByName(name string, command string) {
 	for no, io := range Config.Global.Gpio.Mapping.Map {
 
 		if io.Enabled && io.Direction == "output" && io.Name == name {
-			if command == "on" {
+			if command == "off" {
 				if io.Blocking {
 					pinOn(no, io)
 				} else {
@@ -61,7 +94,7 @@ func GPIOOutPinByName(name string, command string) {
 				break
 			}
 
-			if command == "off" {
+			if command == "on" {
 				if io.Blocking {
 					pinOff(no, io)
 				} else {
@@ -263,21 +296,21 @@ func pinToggle(no int, io structIO) {
 }
 
 func pinPulse(no int, io structIO) {
-	log.Printf("debug: Pulsing Item %v Name %v at GPIO %v Output GPIO\n", io.Item, io.Name, io.Gpio)
+	log.Printf("debug: Item No %v Pulsing Item %v Name %v at GPIO %v Output GPIO\n", no, io.Item, io.Name, io.Gpio)
 	if io.Inverted {
-		gpio.NewOutput(io.Gpio, true)
-		time.Sleep(io.Pulseleadingmsecs * time.Millisecond)
 		gpio.NewOutput(io.Gpio, false)
-		time.Sleep(io.Pulsemsecs * time.Millisecond)
+		time.Sleep(io.Pulseleadingmsecs * time.Millisecond)
 		gpio.NewOutput(io.Gpio, true)
+		time.Sleep(io.Pulsemsecs * time.Millisecond)
+		gpio.NewOutput(io.Gpio, false)
 		time.Sleep(io.Pulsetrailingmsecs * time.Millisecond)
 	}
 	if !io.Inverted {
-		gpio.NewOutput(io.Gpio, false)
-		time.Sleep(io.Pulseleadingmsecs * time.Millisecond)
 		gpio.NewOutput(io.Gpio, true)
-		time.Sleep(io.Pulsemsecs * time.Millisecond)
+		time.Sleep(io.Pulseleadingmsecs * time.Millisecond)
 		gpio.NewOutput(io.Gpio, false)
+		time.Sleep(io.Pulsemsecs * time.Millisecond)
+		gpio.NewOutput(io.Gpio, true)
 		time.Sleep(io.Pulsetrailingmsecs * time.Millisecond)
 	}
 }

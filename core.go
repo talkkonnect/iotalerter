@@ -207,102 +207,59 @@ keyPressListenerLoop:
 			default:
 				log.Println("info: --")
 				if ev.Ch == 49 {
-					log.Println("Info: 1 Pressed Relay 1 Toggle")
-					GPIOOutPinByName("relay1", "toggle")
+					log.Println("Info: 1 Pressed Relay 1 On")
+					GPIOOutPinByName("relay1", "on")
+					log.Println("info: --")
+					break
+				}
+				if ev.Ch == 113 {
+					log.Println("Info: Q Pressed Relay 1 Off")
+					GPIOOutPinByName("relay1", "off")
 					log.Println("info: --")
 					break
 				}
 				if ev.Ch == 50 {
-					log.Println("Info: 2 Pressed Relay 2 Toggle")
-					GPIOOutPinByName("relay2", "toggle")
+					log.Println("Info: 2 Pressed Relay 2 On")
+					GPIOOutPinByName("relay2", "on")
+					log.Println("info: --")
+					break
+				}
+				if ev.Ch == 119 {
+					log.Println("Info: W Pressed Relay 2 Off")
+					GPIOOutPinByName("relay2", "off")
 					log.Println("info: --")
 					break
 				}
 				if ev.Ch == 51 {
-					log.Println("Info: 3 Pressed Relay 3 Toggle")
-					GPIOOutPinByName("relay3", "toggle")
+					log.Println("Info: 3 Pressed Relay 5 On")
+					GPIOOutPinByName("relay3", "on")
+					log.Println("info: --")
+					break
+				}
+				if ev.Ch == 101 {
+					log.Println("Info: E Pressed Relay 3 Off")
+					GPIOOutPinByName("relay3", "off")
 					log.Println("info: --")
 					break
 				}
 				if ev.Ch == 52 {
-					log.Println("Info: 4 Pressed Relay 4 Toggle")
-					GPIOOutPinByName("relay4", "toggle")
-					log.Println("info: --")
-					break
-				}
-				if ev.Ch == 53 {
-					log.Println("Info: 5 Pressed Relay 5 Toggle")
-					GPIOOutPinByName("relay5", "toggle")
-					log.Println("info: --")
-					break
-				}
-				if ev.Ch == 54 {
-					log.Println("Info: 6 Pressed Relay 6 Toggle")
-					GPIOOutPinByName("relay6", "toggle")
-					log.Println("info: --")
-					break
-				}
-				if ev.Ch == 55 {
-					log.Println("Info: 7 Pressed Relay 7 Toggle")
-					GPIOOutPinByName("relay7", "toggle")
-					log.Println("info: --")
-					break
-				}
-				if ev.Ch == 56 {
-					log.Println("Info: 8 Pressed Relay 8 Toggle")
-					GPIOOutPinByName("relay8", "toggle")
-					log.Println("info: --")
-					break
-				}
-				if ev.Ch == 33 {
 					log.Println("Info: Shift-1 Pressed Relay 1 Pulse")
 					GPIOOutPinByName("relay1", "pulse")
 					log.Println("info: --")
 					break
 				}
-				if ev.Ch == 64 {
+				if ev.Ch == 53 {
 					log.Println("Info: Shift-2 Pressed Relay 2 Pulse")
 					GPIOOutPinByName("relay2", "pulse")
 					log.Println("info: --")
 					break
 				}
-				if ev.Ch == 35 {
+				if ev.Ch == 54 {
 					log.Println("Info: Shift-3 Pressed Relay 3 Pulse")
 					GPIOOutPinByName("relay3", "pulse")
 					log.Println("info: --")
 					break
 				}
-				if ev.Ch == 36 {
-					log.Println("Info: Shift-4 Pressed Relay 4 Pulse")
-					GPIOOutPinByName("relay4", "pulse")
-					log.Println("info: --")
-					break
-				}
-				if ev.Ch == 37 {
-					log.Println("Info: Shift-5 Pressed Relay 5 Pulse")
-					GPIOOutPinByName("relay5", "pulse")
-					log.Println("info: --")
-					break
-				}
-				if ev.Ch == 94 {
-					log.Println("Info: Shift-6 Pressed Relay 6 Pulse")
-					GPIOOutPinByName("relay6", "pulse")
-					log.Println("info: --")
-					break
-				}
-				if ev.Ch == 38 {
-					log.Println("Info: Shift-7 Pressed Relay 7 Pulse")
-					GPIOOutPinByName("relay7", "pulse")
-					log.Println("info: --")
-					break
-				}
-				if ev.Ch == 42 {
-					log.Println("Info: Shift-8 Pressed Relay 8 Pulse")
-					GPIOOutPinByName("relay8", "pulse")
-					log.Println("info: --")
-					break
-				}
-
 				if ev.Ch != 0 {
 					log.Println("warn: Invalid Keypress ASCII", ev.Ch)
 				} else {

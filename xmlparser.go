@@ -96,6 +96,7 @@ type ConfigStruct struct {
 					Title   string `xml:"title,attr"`
 					Body    string `xml:"body,attr"`
 					Payload string `xml:"payload,attr"`
+					Event   string `xml:"event,attr"`
 					Enabled bool   `xml:"enabled,attr"`
 				} `xml:"action"`
 			} `xml:"payload"`

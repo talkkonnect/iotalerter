@@ -1,8 +1,8 @@
 package iotalerter
 
 const (
-	version  string = "0.1"
-	released string = "22 Jul 2024"
+	version  string = "0.2"
+	released string = "23 Jul 2024"
 )
 
 //Notes
